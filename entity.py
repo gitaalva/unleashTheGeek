@@ -20,6 +20,11 @@ class Entity:
     self.is_controlled = is_controlled
     assert (is_controlled == 0 or is_controlled == 1), "invalid shield life"
 
+  # change to new position in direction of vector(x1,y1)
+  def moveInDirection(self,x1,y1):
+      self.x += self.x1
+      self.y += self.y1
+
   def isValid(self):
     print ("In entity is valid")
     assert (type >= 0 and type <= 2), "invalid type for entity"

@@ -3,6 +3,8 @@ import math
 
 import functions
 
+from board import *
+
 # Global Variables
 sqrtTwo = 2**.5
 
@@ -76,8 +78,6 @@ class Wind(Spell):
         windspellCasterDict = future_board_state.getHerosIdDic()
         windSpellCaster = windspellCasterDict[self.sourceEntityID]
         monsterDict = board_state.getMonsterIdDic()
-        abc = Monster()
-        abc.moveMonsterToNewPosition()
         for monsterId, monsterObj in monsterDict:
             if distance(windSpellCaster.x,windSpellCaster.y,monsterObj.x,monsterObj.y) <= 1280:
                 vec = Vector(windSpellCaster.x, windSpellCaster.y, x1, y1)
@@ -87,10 +87,27 @@ class Wind(Spell):
                 vec.y1 = (y1-windSpellCaster.y)/vec.length
                 vec.x2 *= 2200
                 vec.y2 *= 2200
-                monsterObj.moveMonsterToNewPosition(vec.x2, vec.y1)
+                monsterObj.moveInDirection(vec.x2, vec.y2)
                 monsterObj.is_velocity_invalid = True
 
-        #for monsterData
+        enemiesDict = board_state.getEnemiesIdDic()
+        #self, id, type, x, y, shieldlife, isControl
+        dummyEnemy = Enemy(1,2,0,0,3,False)
+        for enemyId, enemyObj in enemiesDict:
+            if distance(windSpellCaster.x,windSpellCaster.y,enemyObj.x,enemyObj.y) <= 1280:
+                vec = Vector(windSpellCaster.x, windSpellCaster.y, x1, y1)
+                vec.x1 = 0
+                vec.y1 = 0
+                vec.x2 = (x1 - windSpellCaster.x) / vec.length
+                vec.y1 = (y1 - windSpellCaster.y) / vec.length
+                vec.x2 *= 2200
+                vec.y2 *= 2200
+                enemyObj.moveInDirection(vec.x2, vec.y2)
+
+
+
+
+
 
 class Control(Spell):
     def __init__(self, sourceEntityID, targetEntityID,sourceEntityType, x1, y1):

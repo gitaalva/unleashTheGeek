@@ -13,6 +13,15 @@ class BoardState:
     def value(self):
         return 0
 
+    def getMonsterIdDic(self):
+        return self.entities[0]
+
+    def getHerosIdDic(self):
+        return self.entities[1]
+
+    def getEnemiesIdDic(self):
+        return self.entities[2]
+
     def nextState(self,Turn):
         returnType = BoardState(self.player,self.enemy,self.monsters,self.heros,self.enemies)
         returnType.takeTurn(turn)
